@@ -7,6 +7,7 @@ import VideoPlayer from '@/helpers/VideoPlayer.jsx'; // Ensure this component is
 import videojs from 'video.js'; // Assuming you are using video.js
 
 const ITEMS_PER_PAGE = 10; // Adjust if necessary
+const domain = process.env.NEXT_PUBLIC_DOMAIN;
 
 export default function GetAllFiles() {
   const [files, setFiles] = useState([]);
@@ -22,7 +23,7 @@ export default function GetAllFiles() {
       setLoading(true);
       setError(null); // Reset error state before fetching
       try {
-        const response = await fetch(`http://localhost:8000/getFiles?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
+        const response = await fetch(`${domain}/getFiles?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
         const data = await response.json();
 
         if (data.video.success) {

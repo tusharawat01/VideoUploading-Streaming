@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const domain = process.env.NEXT_PUBLIC_DOMAIN;
+
 const UploadFile = () => {
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  
   const handleFileChange = (e) => {
     setFiles(Array.from(e.target.files));
   };
@@ -19,12 +21,11 @@ const UploadFile = () => {
     }
 
     const formData = new FormData();
-    files.forEach((file) => formData.append('videos', file)); 
-
+    files.forEach((file) => formData.append('files', file)); 
     setIsLoading(true); 
 
     try {
-      const response = await fetch('http://localhost:8000/upload', {
+      const response = await fetch(`${domain}/upload`, {
         method: 'POST',
         body: formData,
       });

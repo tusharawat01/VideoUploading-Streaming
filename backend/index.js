@@ -86,7 +86,7 @@ const upload = multer({ storage: storage });
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
+    origin: ["http://localhost:3000", "http://localhost:5173", "https://video-uploading-streaming.vercel.app"],
     credentials: true
   })
 );
@@ -140,7 +140,7 @@ app.post("/upload", upload.array('files', 10), async (req, res) => {
       const videoPath = file.path;
       console.log("video path:", videoPath);
 
-      const ffmpegCommand = `ffmpeg -i ${videoPath} -codec:v libx264 -preset fast -codec:a aac  -b:a 128k -hls_time 10 -hls_playlist_type vod -hls_segment_filename "${outputPath}/segment%03d.ts" -start_number 0 -threads 4 ${hlsPath}`;
+      const ffmpegCommand = `ffmpeg -i ${videoPath} -codec:v libx264 -codec:a aac -hls_time 10 -hls_playlist_type vod -hls_segment_filename "${outputPath}/segment%03d.ts" -start_number 0 -threads 4 ${hlsPath}`;
 
 
       await execPromise(ffmpegCommand);
