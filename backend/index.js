@@ -84,12 +84,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "http://localhost:5173", "https://video-uploading-streaming.vercel.app"],
-    credentials: true
-  })
-);
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -257,4 +252,3 @@ app.get("/getFiles", async (req, res) => {
     res.status(500).json({ error: "An error occurred while fetching the video" });
   }
 });
-
